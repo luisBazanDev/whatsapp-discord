@@ -1,10 +1,10 @@
 {
-  "name": "whatsapp-test",
+  "name": "whatsapp-discord",
   "version": "1.0.0",
-  "description": "Una prueba para un bot de whatsapp",
-  "main": "src/index.js",
+  "description": "Una prueba para conectar whatsapp con discord",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [
     "whatsapp-web"
@@ -12,6 +12,8 @@
   "author": "Luis Bazán",
   "license": "ISC",
   "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.16.5"
   },
