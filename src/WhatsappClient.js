@@ -3,6 +3,7 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 
 const client = new Client({
   authStrategy: new LocalAuth(),
+  ffmpegPath: __dirname + '/../resorces/software/ffmpeg.exe',
 });
 
 (async () => {

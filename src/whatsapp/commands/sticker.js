@@ -1,17 +1,17 @@
-const Util = require('whatsapp-web.js/src/util/Util');
 module.exports = {
   name: 'sticker',
   aliases: ['make-sticker'],
   permissions: [],
   description: 'Make a sticker with img',
-  run: async(client, msg) => {
+  run: async(client, msg, args) => {
     if(!msg.hasMedia) {
       return msg.reply('Please send a image')
     }
     const media = await msg.downloadMedia();
-    const sticker = await Util.formatImageToWebpSticker(media, client.pupPage);
-    msg.reply(sticker, {
-      sendMediaAsSticker: true
+    msg.reply(media, null, {
+      sendMediaAsSticker: true,
+      stickerName: args.length > 0 ? args.join(" ") : 'sticker',
+      stickerAuthor: '@Luis Bazán 👨‍💻'
     })
   }
 }
