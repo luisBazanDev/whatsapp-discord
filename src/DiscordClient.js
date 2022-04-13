@@ -1,27 +1,56 @@
-const fs = require('fs')
-const { Client, Intents } = require('discord.js')
+const fs = require("fs");
+const { Client, Intents } = require("discord.js");
+const config = require("../config.json");
 
-const client = new Client({
-  intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.DIRECT_MESSAGES,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MESSAGE_TYPING,
-  ]
+const intents = config.discord.intents.map(intent => {
+  return Intents.FLAGS[intent];
 })
 
-;(async() => {
-  const eventsFiles = fs.readdirSync('./src/discord/events/')
+const client = new Client({
+  intents,
+});
+
+client.config = config;
+
+client.commands = {
+  slash: new Map(),
+  text: new Map(),
+};
+
+(async () => {
+  const eventsFiles = fs.readdirSync("./src/discord/events/");
   for (const eventFile of eventsFiles) {
-    const event = require(`./discord/events/${eventFile}`)
-    client.on(event.name, (...args) => event.execute(client, ...args))
+    const event = require(`./discord/events/${eventFile}`);
+    client.on(event.name, (...args) => event.execute(client, ...args));
   }
-})()
+
+  const categories = fs.readdirSync("./src/discord/commands/");
+  categories.map((category) => {
+    const commands = fs.readdirSync(`./src/discord/commands/${category}`);
+    commands.map((command) => {
+      const cmd = require(`./discord/commands/${category}/${command}`);
+      client.commands[category].set(cmd.name, cmd);
+      if (!command.aliases) return;
+      command.aliases.map((alias) => {
+        client.commands[category].set(alias, cmd);
+      });
+    });
+  });
+})();
 
 module.exports = {
   client,
   start: () => {
-    client.login(process.env.DISCORD_TOKEN)
-    console.log('Starting Discord Client')
-  }
-}
+    client.login(process.env.DISCORD_TOKEN);
+    console.log("Starting Discord Client");
+  },
+  sendMessage: async({
+    channel,
+    message,
+    img,
+    embed,
+    file,
+  }) => {
+    
+  },
+};

@@ -1,5 +1,5 @@
 // DotEnv config
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 // Variables
