@@ -29,7 +29,7 @@ const client = new Client({
 module.exports = {
   client,
   start: () => {
-    console.log("Starting Whatsapp Client");
+    console.log("Starting Whatsapp Client...");
     client.initialize();
   },
 };

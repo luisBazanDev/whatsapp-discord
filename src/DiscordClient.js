@@ -41,8 +41,8 @@ client.commands = {
 module.exports = {
   client,
   start: () => {
+    console.log("Starting Discord Client...");
     client.login(process.env.DISCORD_TOKEN);
-    console.log("Starting Discord Client");
   },
   sendMessage: async({
     channel,
